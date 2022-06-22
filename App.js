@@ -4,21 +4,71 @@ import { StyleSheet, Text, View, ScrollView, Switch, TouchableOpacity } from 're
 
 import {MaterialIcons} from '@expo/vector-icons';
 
+import axios from 'axios';
+
 export default function App() {
 
+  // constants of RED led
   const [isEnable, setIsEnable] = useState(false);
   const isSwitch = () => {
     setIsEnable(previousState => !previousState);
   }
 
+  const ledRed = () => {
+    if(isEnable == false) {
+      axios.get('endereco esp/on').then(response => {
+        console.log('Led vermelha ligada');
+      })
+    }
+    else {
+      axios.get('endereco esp/off').then(response => {
+        console.log('Led vermelha desligada');
+      })
+    }
+  }
+
+
+  // constants of GREEN led
   const [isEnable2, setIsEnable2] = useState(false);
   const isSwitch2 = () => {
     setIsEnable2(previousState => !previousState);
   }
 
-  const [dhtUmi, setDhtUmi] = useState('--');
+  const ledGreen = () => {
+    if(isEnable2 == false) {
+      axios.get('endereco esp/onGreen').then(response => {
+        console.log('Led verde ligada');
+      })
+    }
+    else {
+      axios.get('endereco esp/offGreen').then(response => {
+        console.log('Led verde desligada');
+      })
+    }
+  }
 
+
+  // constants of Humidity led
+  const [dhtHumi, setDhtHumi] = useState('--');
+
+  const humidity = () => {
+    axios.get('endereco esp/dht11/humidity').then(response => {
+      setDhtTemp(dhtHumidity => response.data)
+      console.log('Dado recuperado com sucesso')
+    })
+  }
+
+
+  // constants of Temperature led
   const [dhtTemp, setDhtTemp] = useState('--');
+
+  const temperature = () => {
+    axios.get('endereco esp/dht11/temperature').then(response => {
+      setDhtTemp(dhtTemperature => response.data)
+      console.log('Dado recuperado com sucesso')
+    })
+  }
+
 
   return (
     <>
@@ -48,9 +98,9 @@ export default function App() {
 
         <Text style={styles.titulo}>Umidade</Text>
         <View style={styles.status}>
-          <Text style={styles.details}>Medida: <Text style={styles.value}>{dhtUmi}</Text>%</Text>
+          <Text style={styles.details}>Medida: <Text style={styles.value}>{dhtHumi}</Text>%</Text>
           <View style={styles.button}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={humidity}>
               <MaterialIcons name="sync" size={45} color={'#fff'} />
             </TouchableOpacity>
           </View>
@@ -60,7 +110,7 @@ export default function App() {
         <View style={styles.status}>
           <Text style={styles.details}>Medida: <Text style={styles.value}>{dhtTemp}</Text>ºC</Text>
           <View style={styles.button}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={temperature}>
               <MaterialIcons name="sync" size={45} color={'#fff'} />
             </TouchableOpacity>
           </View> 

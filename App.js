@@ -16,12 +16,12 @@ export default function App() {
 
   const ledRed = () => {
     if(isEnable == false) {
-      axios.get('endereco esp/on').then(response => {
+      axios.get('http://192.168.0.16/onred').then(response => {
         console.log('Led vermelha ligada');
       })
     }
     else {
-      axios.get('endereco esp/off').then(response => {
+      axios.get('http://192.168.0.16/offred').then(response => {
         console.log('Led vermelha desligada');
       })
     }
@@ -36,12 +36,12 @@ export default function App() {
 
   const ledGreen = () => {
     if(isEnable2 == false) {
-      axios.get('endereco esp/onGreen').then(response => {
+      axios.get('http://SEU.IP/ongreen').then(response => {
         console.log('Led verde ligada');
       })
     }
     else {
-      axios.get('endereco esp/offGreen').then(response => {
+      axios.get('http://SEU.IP/offgreen').then(response => {
         console.log('Led verde desligada');
       })
     }
@@ -52,9 +52,9 @@ export default function App() {
   const [dhtHumi, setDhtHumi] = useState('--');
 
   const humidity = () => {
-    axios.get('endereco esp/dht11/humidity').then(response => {
-      setDhtTemp(dhtHumidity => response.data)
-      console.log('Dado recuperado com sucesso')
+    axios.get('http://SEU.IP/dht11/humi').then(response => {
+      setDhtHumi(dhtHumidity => response.data)
+      console.log(`A umidade está em: ${dhtHumi}%`);
     })
   }
 
@@ -63,9 +63,9 @@ export default function App() {
   const [dhtTemp, setDhtTemp] = useState('--');
 
   const temperature = () => {
-    axios.get('endereco esp/dht11/temperature').then(response => {
+    axios.get('http://SEU.IP/dht11/temp').then(response => {
       setDhtTemp(dhtTemperature => response.data)
-      console.log('Dado recuperado com sucesso')
+      console.log(`A umidade está em: ${dhtTemp}Cº`);
     })
   }
 
@@ -84,6 +84,7 @@ export default function App() {
           <Switch 
             onValueChange={isSwitch}
             value={isEnable}
+            onChange={ledRed}
           />
         </View>
 
@@ -93,6 +94,7 @@ export default function App() {
           <Switch 
             onValueChange={isSwitch2}
             value={isEnable2}
+            onChange={ledGreen}
           />
         </View>
 

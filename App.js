@@ -1,20 +1,45 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.titulo}>Led vermelha</Text>
+        <Text style={styles.detalhes}>Ligado</Text>
+
+
+        <Text style={styles.titulo}>Led verde</Text>
+        <Text style={styles.detalhes}>Ligado</Text>
+
+        <Text style={styles.titulo}>Umidade</Text>
+        <Text style={styles.detalhes}>Medida: 10%</Text>
+
+        <Text style={styles.titulo}>Temperatura</Text>
+        <Text style={styles.detalhes}>Medida: 25ºC</Text>
+
+      </View>
+    </ScrollView>
+    <Text style={{alignSelf: 'center'}}>Versão alfa 0.1</Text>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 20
   },
+  titulo: {
+    fontWeight: 'bold',
+    fontSize: 25,
+    marginTop: 15,
+    marginLeft: 25
+  },
+  detalhes: {
+    fontSize: 15,
+    textAlign: 'justify',
+    marginTop: 25,
+    color: '#696969'
+  }
 });

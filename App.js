@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, ScrollView, Switch, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Switch, TouchableOpacity, Alert } from 'react-native';
 
 import {MaterialIcons} from '@expo/vector-icons';
 
@@ -16,13 +16,19 @@ export default function App() {
 
   const ledRed = () => {
     if(isEnable == false) {
-      axios.get('http://192.168.0.16/onred').then(response => {
+      axios.get('http://SEU.IP/onred').then(response => {
         console.log('Led vermelha ligada');
+      }).catch((error) => {
+        console.log('Erro! Contate o administrador');
+        Alert.alert('Erro: Não foi possível acender a luz vermelha');
       })
     }
     else {
-      axios.get('http://192.168.0.16/offred').then(response => {
+      axios.get('http://SEU.IP/offred').then(response => {
         console.log('Led vermelha desligada');
+      }).catch((error) => {
+        console.log('Erro! Contate o administrador');
+        Alert.alert('Erro: Não foi possível apagar a luz vermelha');
       })
     }
   }
@@ -38,11 +44,17 @@ export default function App() {
     if(isEnable2 == false) {
       axios.get('http://SEU.IP/ongreen').then(response => {
         console.log('Led verde ligada');
+      }).catch((error) => {
+        console.log('Erro! Contate o administrador');
+        Alert.alert('Erro: Não foi possível acender a luz verde');
       })
     }
     else {
       axios.get('http://SEU.IP/offgreen').then(response => {
         console.log('Led verde desligada');
+      }).catch((error) => {
+        console.log('Erro! Contate o administrador');
+        Alert.alert('Erro: Não foi possível apagar a luz verde');
       })
     }
   }
@@ -55,6 +67,9 @@ export default function App() {
     axios.get('http://SEU.IP/dht11/humi').then(response => {
       setDhtHumi(dhtHumidity => response.data)
       console.log(`A umidade está em: ${dhtHumi}%`);
+    }).catch((error) => {
+      console.log('Erro! Contate o administrador');
+      Alert.alert('Erro: Não foi possível fazer a leitura da umidade');
     })
   }
 
@@ -66,6 +81,9 @@ export default function App() {
     axios.get('http://SEU.IP/dht11/temp').then(response => {
       setDhtTemp(dhtTemperature => response.data)
       console.log(`A umidade está em: ${dhtTemp}Cº`);
+    }).catch((error) => {
+      console.log('Erro! Contate o administrador');
+      Alert.alert('Erro: Não foi possível capturar temperatura');
     })
   }
 

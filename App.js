@@ -1,20 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, ScrollView, Switch } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Switch, TouchableOpacity } from 'react-native';
+
+import {MaterialIcons} from '@expo/vector-icons';
 
 export default function App() {
 
   const [isEnable, setIsEnable] = useState(false);
-
   const isSwitch = () => {
     setIsEnable(previousState => !previousState);
   }
 
   const [isEnable2, setIsEnable2] = useState(false);
-
   const isSwitch2 = () => {
     setIsEnable2(previousState => !previousState);
   }
+
+  const [dhtUmi, setDhtUmi] = useState('--');
+
+  const [dhtTemp, setDhtTemp] = useState('--');
 
   return (
     <>
@@ -25,7 +29,6 @@ export default function App() {
       <View style={styles.container}>
 
         <Text style={styles.titulo}>Led vermelha</Text>
-        
         <View styles={styles.status}>
           <Text style={isEnable ? styles.ON : styles.OFF}> {isEnable ? 'LIGADO' : 'DESLIGADO'}</Text>
           <Switch 
@@ -44,10 +47,24 @@ export default function App() {
         </View>
 
         <Text style={styles.titulo}>Umidade</Text>
-        <Text style={styles.details}>Medida: 10%</Text>
+        <View style={styles.status}>
+          <Text style={styles.details}>Medida: <Text style={styles.value}>{dhtUmi}</Text>%</Text>
+          <View style={styles.button}>
+            <TouchableOpacity>
+              <MaterialIcons name="sync" size={45} color={'#fff'} />
+            </TouchableOpacity>
+          </View>
+        </View>
 
         <Text style={styles.titulo}>Temperatura</Text>
-        <Text style={styles.details}>Medida: 25ºC</Text>
+        <View style={styles.status}>
+          <Text style={styles.details}>Medida: <Text style={styles.value}>{dhtTemp}</Text>ºC</Text>
+          <View style={styles.button}>
+            <TouchableOpacity>
+              <MaterialIcons name="sync" size={45} color={'#fff'} />
+            </TouchableOpacity>
+          </View> 
+        </View>
 
       </View>
     </ScrollView>
@@ -90,4 +107,15 @@ const styles = StyleSheet.create({
     color: '#cc4040',
     fontWeight: 'bold'
   },
+  button: {
+    alignSelf: 'center',
+    backgroundColor: '#2ecc71',
+    marginTop: 25,
+    borderRadius: 4
+  },
+  value: {
+    fontSize: 50,
+    fontWeight: 'bold',
+    color: '#4b8b3b'
+  }
 });
